@@ -7,9 +7,4 @@ public class Transaction
     public float cost { get; set; }
     
     public float sale { get; set; }
-
-    public Transaction()
-    {
-        
-    }
 }

@@ -1,0 +1,105 @@
+@model IEnumerable<SuperApp.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="color: snow; margin-top: 25px">Trancsaction</h1>
+
+<p style="color: snow;">
+    <a asp-action="Create" style="color: lightskyblue">Create New</a>
+</p>
+<table class="table rcorners2" style="background-color: #fff2ea">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sale)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sale)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>Revenue</td>
+        <td>@Model.Sum(i => i.sale - i.cost)</td>
+    </tr>
+    <tr>
+        <td>Count</td>
+        <td>@Model.Count()</td>
+    </tr>
+    <tr>
+        <td>Avg profit</td>
+        <td>@Model.Average(i =>  i.sale - i.cost).ToString("0.00")</td>
+    </tr>
+    <tr>
+        <td>Worst profit</td>
+        <td>@Model.Min(i =>  i.sale - i.cost)</td>
+    </tr>
+    <tr>
+        <td>Worst profit %</td>
+        <td>@Model.Min(i =>  100 * (i.sale - i.cost) / i.cost).ToString("0.00") %</td>
+    </tr>
+    <tr>
+        <td>Best profit</td>
+        <td>@Model.Max(i =>  i.sale - i.cost)</td>
+    </tr>
+    <tr>
+        <td>Best profit %</td>
+        <td>@Model.Max(i =>  100 * (i.sale - i.cost) / i.cost).ToString("0.00") %</td>
+    </tr>
+    </tfoot>
+</table>
+<style>
+.rcorners2 {
+  border-radius: 25px;
+  border: 2px solid transparent;
+  padding: 20px;
+}
+    .bg {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      background-size: 300% 300%;
+      background-image: linear-gradient(
+            -45deg, 
+            rgb(16,110,147) 0%, 
+            rgb(99,116,239) 25%, 
+            rgb(135,35,168) 51%, 
+            rgb(234,106,150) 100%
+      );  
+      animation: AnimateBG 20s ease infinite;
+    }
+    
+    @@keyframes AnimateBG { 
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+</style>
